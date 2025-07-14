@@ -251,14 +251,14 @@ function generateCode(query) {
 function suggest(query) {
     const normalizedQuery = query.toLowerCase();
     const components = [];
-
+  
     const match = (keywords) => keywords.some((k) => normalizedQuery.includes(k));
-
-    // Prioritize exact component name matches
+  
+    // Exact match to known component names
     const directMatches = Object.values(VISA_COMPONENTS).filter((component) =>
       normalizedQuery.includes(component.name.toLowerCase())
     );
-
+  
     if (directMatches.length > 0) {
       components.push(...directMatches);
     } else if (match(["login", "sign in", "form"])) {
@@ -272,10 +272,10 @@ function suggest(query) {
       );
     } else if (match(["credit card", "payment", "card input"])) {
       components.push(
+        VISA_COMPONENTS.Card,
         VISA_COMPONENTS.Label,
         VISA_COMPONENTS.Input,
         VISA_COMPONENTS.InputContainer,
-        VISA_COMPONENTS.Card,
         VISA_COMPONENTS.Button
       );
     } else if (match(["pagination", "data table", "sort", "page"])) {
@@ -283,28 +283,44 @@ function suggest(query) {
         VISA_COMPONENTS.Card,
         VISA_COMPONENTS.Table,
         VISA_COMPONENTS.Pagination,
-        VISA_COMPONENTS.PaginationOverflow
+        VISA_COMPONENTS.PaginationOverflow,
+        VISA_COMPONENTS.Button
       );
-    } else if (match(["profile", "avatar", "user icon"])) {
-      components.push(VISA_COMPONENTS.Avatar);
+    } else if (match(["profile", "avatar", "user icon", "user details"])) {
+      components.push(
+        VISA_COMPONENTS.Card,
+        VISA_COMPONENTS.Avatar,
+        VISA_COMPONENTS.Typography,
+        VISA_COMPONENTS.Utility
+      );
+    } else if (match(["navigation", "header", "user menu"])) {
+      components.push(
+        VISA_COMPONENTS.Utility,
+        VISA_COMPONENTS.Avatar,
+        VISA_COMPONENTS.Button,
+        VISA_COMPONENTS.Typography
+      );
     } else if (match(["toast", "notification"])) {
       components.push(VISA_COMPONENTS.Toast);
-    } else if (match(["modal", "dialog"])) {
-      components.push(VISA_COMPONENTS.Modal, VISA_COMPONENTS.Button);
+    } else if (match(["modal", "dialog", "popup"])) {
+      components.push(
+        VISA_COMPONENTS.Modal,
+        VISA_COMPONENTS.Button
+      );
     }
-
-    // If still empty, show fallback
+  
+    // Fallback
     if (components.length === 0) {
       components.push(VISA_COMPONENTS.Button);
     }
-
+  
     const code = generateCode(normalizedQuery);
-
+  
     return {
       components,
       code,
     };
-}
+  }
 
 // Export the main function to be used by other files
 module.exports = {
