@@ -290,15 +290,11 @@ function suggest(query) {
       components.push(
         VISA_COMPONENTS.Card,
         VISA_COMPONENTS.Avatar,
-        VISA_COMPONENTS.Typography,
-        VISA_COMPONENTS.Utility
       );
     } else if (match(["navigation", "header", "user menu"])) {
       components.push(
-        VISA_COMPONENTS.Utility,
         VISA_COMPONENTS.Avatar,
         VISA_COMPONENTS.Button,
-        VISA_COMPONENTS.Typography
       );
     } else if (match(["toast", "notification"])) {
       components.push(VISA_COMPONENTS.Toast);
