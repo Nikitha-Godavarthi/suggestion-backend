@@ -12,24 +12,11 @@ const app = express();
 const PORT = 3001;
 
 //Middleware
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://visa-ui-suggestion-system.vercel.app",
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: ["http://localhost:5173", "https://visa-ui-suggestion-system.vercel.app/"],
   credentials: true,
 }));
-
+app.use(express.json()); 
 
 
 const queryRoutes = require("./routes/queries");
