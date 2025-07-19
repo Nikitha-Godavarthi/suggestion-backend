@@ -13,7 +13,7 @@ const PORT = 3001;
 
 //Middleware
 app.use(cors({
-  origin: ["http://localhost:5173", "https://visa-ui-suggestion-system.vercel.app/"],
+  origin: ["http://localhost:5173", "https://visa-ui-suggestion-system.vercel.app"],
   credentials: true,
 }));
 app.use(express.json()); 
