@@ -18,6 +18,8 @@ app.use(cors({
 }));
 app.use(express.json()); 
 
+// Routes
+app.use("/auth", authRoutes);
 
 const queryRoutes = require("./routes/queries");
 app.use("/queries", queryRoutes);
@@ -30,9 +32,6 @@ app.use("/favorites", favoriteRoutes);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
-
-// Routes
-app.use("/auth", authRoutes);
 
 app.post("/suggest", (req, res) => {
   const { prompt } = req.body;
